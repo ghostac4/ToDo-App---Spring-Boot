@@ -24,7 +24,7 @@ public class EmailSender {
 	@Autowired
 	private JavaMailSender emailSender;
 	private static final Logger LOGGER = LoggerFactory.getLogger(EmailSender.class);
-	private String verifyLink ="http://localhost:8080/verifyEmail/";
+	private String verifyLink ="http://localhost:8081/verifyEmail/";
 	private String message = "<!DOCTYPE html>\n" + 
 			"<html lang=\"en\" dir=\"ltr\">\n" + 
 			"<head>\n" + 
