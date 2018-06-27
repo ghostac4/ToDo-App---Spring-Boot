@@ -21,9 +21,8 @@ public class JWTToken {
 	private static final String secretKey = "A4A724A34645343E1AAE6512EFBEC";
 	private static final String SUBJECT = "verify";
 	private static final String ISSUER = "todonotes";
-	private static final long EXPIRATION_TIME = 86400000;
 
-	public static String getToken(String id) {
+	public static String getToken(String id,long time) {
 		long nowMillis = System.currentTimeMillis();
 		Date now = new Date(nowMillis);
 
@@ -35,7 +34,7 @@ public class JWTToken {
 		JwtBuilder builder = Jwts.builder().setId(id).setIssuedAt(now).setSubject(SUBJECT).setIssuer(ISSUER)
 				.signWith(signatureAlgorithm, signingKey);
 		// if it has been specified, let's add the expiration
-		long expMillis = nowMillis + EXPIRATION_TIME;
+		long expMillis = nowMillis + time;
 		Date exp = new Date(expMillis);
 		builder.setExpiration(exp);
 

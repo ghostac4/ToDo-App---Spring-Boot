@@ -30,7 +30,7 @@ public class UserService implements IUserService{
 			userModel.setPassword(BCrypt.hashpw(userModel.getPassword(), BCrypt.gensalt()));
 			userDao.register(userModel);
 			String id = userDao.getUserIdByEmail(userModel.getEmail())+"";
-			String token = JWTToken.getToken(id);
+			String token = JWTToken.getToken(id,86400000);
 			rabbitMQSender.sendEmailQueue(userModel.getEmail()+";"+userModel.getName()+";"+token);
 			RedisService.saveToken(id, token);
 			return true;
@@ -62,7 +62,7 @@ public class UserService implements IUserService{
 		if(userModel == null)
 			throw new UserNotFoundException("User Not Exists With emailid "+loginModel.getEmail());
 		if(BCrypt.checkpw(loginModel.getPassword(), userModel.getPassword())) {
-			return JWTToken.getToken(userModel.getId()+"");
+			return JWTToken.getToken(userModel.getId()+"",864000000*10);
 		}
 		return null;
 	}

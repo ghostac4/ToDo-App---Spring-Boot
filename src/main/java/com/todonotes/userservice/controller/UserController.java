@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.todonotes.userservice.model.LoginModel;
 import com.todonotes.userservice.model.UserModel;
 import com.todonotes.userservice.service.IUserService;
+import com.todonotes.utils.Status;
 
 @RestController
 public class UserController {
@@ -47,9 +48,9 @@ public class UserController {
 		if(userService.isEmailVerified(loginModel.getEmail())) {
 			String token = userService.checkLogin(loginModel);
 			if(token == null)
-				return new ResponseEntity<>("Invalid Password",HttpStatus.UNAUTHORIZED);
-			return new ResponseEntity<>(token,HttpStatus.OK);
+				return new ResponseEntity<>(new Status("Invalid Password", "401"),HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<>(new Status(token, "200"),HttpStatus.OK);
 		}
-		return new ResponseEntity<>("Email Not Verified",HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(new Status("Email Not Verified", "404") ,HttpStatus.NOT_FOUND);
 	}
 }

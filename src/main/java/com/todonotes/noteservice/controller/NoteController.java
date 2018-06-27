@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.todonotes.noteservice.model.Note;
 import com.todonotes.noteservice.service.INoteService;
+import com.todonotes.utils.JWTToken;
 
 @Controller
 public class NoteController {
@@ -24,26 +25,30 @@ public class NoteController {
 	private INoteService noteService;
 
 	@PostMapping("/note")
-	public ResponseEntity<?> createNote(@RequestBody Note note, @RequestHeader("userId") long id) {
+	public ResponseEntity<?> createNote(@RequestBody Note note, @RequestHeader("userToken") String token) {
+		long id = Long.parseLong(JWTToken.parseJWT(token));
 		noteService.createNote(note, id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PutMapping("/note")
-	public ResponseEntity<?> updateNote(@RequestBody Note note,@RequestHeader("userId") long id) {
+	public ResponseEntity<?> updateNote(@RequestBody Note note,@RequestHeader("userToken") String token) {
+		long id = Long.parseLong(JWTToken.parseJWT(token));
 		noteService.updateNote(note,id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@DeleteMapping("/note/{noteId}")
-	public ResponseEntity<?> deleteNote(@PathVariable("noteId") long noteId,@RequestHeader("userId") long id) {
+	public ResponseEntity<?> deleteNote(@PathVariable("noteId") long noteId,@RequestHeader("userToken") String token) {
+		long id = Long.parseLong(JWTToken.parseJWT(token));
 		if (noteService.deleteNote(noteId,id))
 			return new ResponseEntity<>("Note not found", HttpStatus.NOT_FOUND);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@GetMapping("/note")
-	public ResponseEntity<?> getAllNotes(@RequestHeader("userId") long id) {
+	public ResponseEntity<?> getAllNotes(@RequestHeader("userToken") String token) {
+		long id = Long.parseLong(JWTToken.parseJWT(token));
 		List<Note> notes = noteService.getAllNotes(id);
 		return new ResponseEntity<>(notes,HttpStatus.OK);
 	}
