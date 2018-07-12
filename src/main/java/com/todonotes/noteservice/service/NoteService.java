@@ -32,13 +32,19 @@ public class NoteService implements INoteService{
 	
 	@Override
 	public void updateNote(Note note,long id) {
-		note = noteDao.getNoteById(note.getNoteId());
-		if(note == null) 
+		Note noteFromDB = noteDao.getNoteById(note.getNoteId());
+		if(noteFromDB == null) 
 			throw new NoteNotFoundException("Note Not Found");
-		if(!noteDao.getAllNotesByUserId(id).contains(note))
+		if(!noteDao.getAllNotesByUserId(id).contains(noteFromDB))
 			throw new NoteNotFoundException("Note does not belong to given user");
-		note.setLastUpdatedDate(new Date(System.currentTimeMillis()));
-		noteDao.updateNote(note);
+		noteFromDB.setTitle(note.getTitle());
+		noteFromDB.setBody(note.getBody());
+		noteFromDB.setLastUpdatedDate(new Date(System.currentTimeMillis()));
+		noteFromDB.setColor(note.getColor());
+		noteFromDB.setArchived(note.isArchived());
+		noteFromDB.setPinned(note.isPinned());
+		noteFromDB.setTrashed(note.isTrashed());
+		noteDao.updateNote(noteFromDB);
 	}
 	
 	@Override

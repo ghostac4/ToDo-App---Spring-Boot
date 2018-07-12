@@ -22,10 +22,10 @@ public class Note {
 	private String body;
 	private Date createdDate;
 	private Date lastUpdatedDate;
-	private boolean isPinned = false;
+	private boolean pinned = false;
 	private String color = "white";
-	private boolean isArchived = false;
-	private boolean isTrashed = false;
+	private boolean archived = false;
+	private boolean trashed = false;
 	
 	public long getNoteId() {
 		return noteId;
@@ -59,30 +59,29 @@ public class Note {
 	public void setLastUpdatedDate(Date lastUpdatedDate) {
 		this.lastUpdatedDate = lastUpdatedDate;
 	}
-	public boolean isPinned() {
-		return isPinned;
-	}
-	public void setPinned(boolean isPinned) {
-		this.isPinned = isPinned;
-	}
 	public String getColor() {
 		return color;
 	}
 	public void setColor(String color) {
 		this.color = color;
 	}
-	public boolean isArchived() {
-		return isArchived;
+	public boolean isPinned() {
+		return pinned;
 	}
-	public void setArchived(boolean isArchived) {
-		this.isArchived = isArchived;
+	public void setPinned(boolean pinned) {
+		this.pinned = pinned;
+	}
+	public boolean isArchived() {
+		return archived;
+	}
+	public void setArchived(boolean archived) {
+		this.archived = archived;
 	}
 	public boolean isTrashed() {
-		return isTrashed;
+		return trashed;
 	}
-	public void setTrashed(boolean isTrashed) {
-		this.isTrashed = isTrashed;
+	public void setTrashed(boolean trashed) {
+		this.trashed = trashed;
 	}
-	
 	
 }

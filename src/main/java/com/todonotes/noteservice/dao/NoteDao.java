@@ -29,7 +29,7 @@ public class NoteDao implements INoteDao{
 	@Override
 	public void updateNote(Note note) {
 		Session session = sessionFactory.getCurrentSession();
-		session.saveOrUpdate(note);
+		session.update(note);
 	}
 	
 	@Override

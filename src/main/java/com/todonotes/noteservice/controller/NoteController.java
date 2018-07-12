@@ -2,6 +2,8 @@ package com.todonotes.noteservice.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,7 @@ public class NoteController {
 
 	@Autowired
 	private INoteService noteService;
+	private final Logger logger = LoggerFactory.getLogger(NoteController.class);
 
 	@PostMapping("/note")
 	public ResponseEntity<?> createNote(@RequestBody Note note, @RequestHeader("userToken") String token) {
@@ -33,6 +36,7 @@ public class NoteController {
 
 	@PutMapping("/note")
 	public ResponseEntity<?> updateNote(@RequestBody Note note,@RequestHeader("userToken") String token) {
+		//logger.info(note.getColor()+" "+token);
 		long id = Long.parseLong(JWTToken.parseJWT(token));
 		noteService.updateNote(note,id);
 		return new ResponseEntity<>(HttpStatus.OK);
